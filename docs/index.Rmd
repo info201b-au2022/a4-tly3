@@ -40,7 +40,7 @@ This chart answers questions similar to the chart above such as "when did the ja
 
 ## Proportion of Black Population in a State vs. Proportion in that State's Jails
 ```{r third chart,echo=FALSE, message=FALSE, warning = FALSE}
-plot(plot_state_pop_v_jail_pop_for_black_pop())
+plot(plot_state_v_jail_black_pop())
 ```
 
 This chart answers questions like "in how many states are black people more represented in jails and prisons compared to how much they make up the state population?". From this chart, we see that black people are extremely disproportionately represented in jails and prisons. We see that all states has less than 50% of its population made up of black people aged 15-64, but approximately 10 states' jails and prisons are compromised of more than 50% of black people. From this chart, one question that arises is what caused this over-representation of black people in the prison system?
