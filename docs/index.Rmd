@@ -1,7 +1,7 @@
 ---
-title: "Your A4 Report Title (TODO: Revise title)"
-author: "Your Name"
-date: '2022-11-01'
+title: "U.S. Incarceration Report"
+author: "Thanh Ly"
+date: '2022-11-20'
 output: html_document
 ---
 
@@ -11,35 +11,45 @@ source("../source/analysis.R")
 ```
 
 ## Abstract 
-[TODO: Include a short abstract (about 50 words)]
-
-# Test (TODO: Remove before submission!!)
-```{r echo=FALSE}
-q1_string <- test_query1()
-num <- 5
-```
-As you know, this is a markdown report. The [R Markdown Cheatsheet](https://www.rstudio.com/wp-content/uploads/2015/02/rmarkdown-cheatsheet.pdf) is **useful!**
-
-* Here's a test of a dynamic variable. Say **"`r q1_string`!!!** 
-* Here's another test. A vector
-of numbers: `r test_query2(num)`.
-
-Recall that _{r echo=TRUE}_ can be used to display the code, 
-which is very useful when developing and debugging a report. Here's an example: 
-
-```{r echo=TRUE}
-num <- 5
-sum <- sum(test_query2(num))
-print(sum)
-```
+Overpolicing and mass incarceration has been a hot topic of discussion in recent years, and in this report, with the help of data collected by Vera Institute, relationships between geography and race, and incarceration numbers are looked into. It takes a look at which areas in the United States have higher incarceration rates, is there a relationship between locations and incarceration rates? It also takes a look at different race groups and analyzes if there are trends between certain groups of people and incarceration.
 
 ## Introduction 
-[TODO]
+The United States has the highest incarceration rates in the world. Why are our incarceration rates so high, which groups of people are these incarceration rates affecting the most, and is there a group(s) of people who are overpoliced and targeted? These are some of the questions that have been raised recently as the people begin to question our incarceration system. Vera Institute has been researching and collecting data on incarcerations in the United States, and with their data, I have used it to look into a few variables and topics of interest such as which region of the U.S. incarcerates the most people? Which group(s) of people are disproportionately represented in prisons and jails? And many other questions. Direct stakeholders of Vera Institute's data set would be people who are using the data set to research and to create apps with that data, as well as users that end up interacting with those final applications. Indirect stakeholder of this data set are the people who's data are being collected.
 
 ## Data Summary 
-[TODO]
+Using Vera Institute's dataset, I analyzed some variables that I was interested in. However, note that all of my data was specified for the year 2016. This is because 2017 and 2018 (the max year recorded in this data set) does not have data on a lot of prison data for all states were missing.
 
-[TODO ... other sections ... See Canvas for details]
+I was interested in seeing which state and region has the highest incarceration rate, and which urbanicity rating (rural, small/mid, suburban, urban) has the highest incarceration rate. I found that the state with the highest incarceration rate is "**`r state_most_incarcerated`**", the region with the highest incarceration rate is "**`r areas_most_incarcerated`**", and which urbanicity classification with the highest incarceration rate is "**`r urbanicity_most_incarcerated`**" (again, do note that all of this data is for 2016).
 
-_All the very best with your work!_
+I also looked into the difference between a race's make up of a state's population vs. their representation in jails and prisons. For example, AK (Alaska) shows that native people has the largest difference between population (aged 15-64) and incarceration. They make up 15.16% of the 15-64 years old population but they make up 41.67% of the incarcerated population. Thus, the native_diff for Alaska is -26.51%. Due to how I calculated this, the larger the negative number means the greater the disparity between their population in the state and their representation in jails and prisons. From here, I found that across the 50 states and Washington, DC, "**`r group_with_most_diff`**" is the most common group with the greatest difference, meaning, across the 50 states and District of Columbia, black people are the most disproportionaly represented in jails and prisons. Further, out of the 50 states and DC, aapi had the greatest difference "**`r aapi_diff_count`**" times, black "**`r black_diff_count`**" times, latinx "**`r latinx_diff_count`**" times, native "**`r native_diff_count`**" times, and white "**`r white_diff_count`**" times. From this we see that black, latinx, and native people are more represented in jails compared to their population make up.
+(Note: Once again, this data is based on data from 2016 since 2017 and 2018 was missing prison population information for all states. However, even in 2016, a few states were missing data on jail and prison population)
+
+## Growth of the U.S. Prison Population
+```{r first chart,echo=FALSE, message=FALSE}
+plot(plot_jail_pop_for_us())
+```
+
+This chart answers questions like "when did the jail population start increasing?", "when did it start declining?", "which year was the highest jail population?" etc. This chart displays the change in the U.S. jail population from 1970 to 2018. From this chart we see that starting at around 1979, a steady increase in the jail population begins meanwhile prior to 1979, it was fairly stagnant. Since 2008 there's been a slow decline in the U.S. jail population. From this chart, I wonder why did the jail population start declining in 2008 when for decades prior it was increasing?
+
+## Growth of Prison Population by State
+```{r second chart,echo=FALSE, message=FALSE}
+plot(plot_jail_pop_by_states(c("WA", "OR", "CA")))
+```
+
+This chart answers questions similar to the chart above such as "when did the jail population start increasing?" but for a specific state. Looking at this chart with the states Washington, Oregon, and California we see that California overall has more people in jails and prisons with Oregon next and Washington last. We also see that California had a significant spike in their jail population starting at around 1978. From this chart, a question that arises is why was there such a large spike in California but no such spike in Washington and Oregon?
+
+## Proportion of Black Population in a State vs. Proportion in that State's Jails
+```{r third chart,echo=FALSE, message=FALSE, warning = FALSE}
+plot(plot_state_pop_v_jail_pop_for_black_pop())
+```
+
+This chart answers questions like "in how many states are black people more represented in jails and prisons compared to how much they make up the state population?". From this chart, we see that black people are extremely disproportionately represented in jails and prisons. We see that all states has less than 50% of its population made up of black people aged 15-64, but approximately 10 states' jails and prisons are compromised of more than 50% of black people. From this chart, one question that arises is what caused this over-representation of black people in the prison system?
+(Note: Once again, the data is specific to data from 2016 due to reasons stated before)
+
+## Latinx Incarceration Population in Texas
+```{r fourth chart,echo=FALSE, message=FALSE, warning = FALSE}
+plot(plot_latinx_incar_pop_texas())
+```
+
+This chart answers questions like "how many counties in Texas has a latinx incarceration population of over 6000?". This chart shows each county in Texas and the latinx incarceration population for each county. From this chart we see that there were a few counties in Texas that we are missing data for. We also see that for most counties the latinx incarceration population is quite low except for a handful of about 9 counties where the latinx incarceration population is over 4000, with 2 of those counties having more than 8000 people. Due to this, one question that arises is why do those counties have higher number of latinx people incarcerated?
 
